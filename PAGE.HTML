@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>给你的手信</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,body{
+  height:100%;
+  min-height:100vh;
+  background: linear-gradient(180deg,#ffeaf3,#fff5f8,#ffdde1);
+  font-family:"Noto Serif SC","PingFang SC","-apple-system",sans-serif;
+  overflow-x:hidden;
+}
+
+body{
+  padding:18px;
+  padding-bottom:60px;
+}
+
+.container{
+  max-width:100%;
+  margin:0 auto;
+}
+
+.card{
+  background:rgba(255,255,255,0.94);
+  padding:26px 22px;
+  border-radius:22px;
+  box-shadow:0 10px 35px rgba(255,80,120,0.22);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.handwritten-title{
+  font-family:"Ma Shan Zheng",cursive;
+  font-size:36px;
+  color:#d63384;
+  text-align:center;
+  margin-bottom:24px;
+  letter-spacing:1px;
+}
+
+.text-box{
+  font-size:16px;
+  line-height:2.4;
+  color:#444;
+  white-space:pre-wrap;
+  min-height:200px;
+}
+
+.cursor{
+  display:inline-block;
+  width:7px;
+  background:#ff6b81;
+  animation:blink 0.7s infinite;
+}
+
+@keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+  100%{opacity:1}
+}
+
+.photo-gallery{
+  margin-top:32px;
+  column-count:1;
+  column-gap:12px;
+}
+
+.photo-item{
+  break-inside:avoid;
+  margin-bottom:14px;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.28s ease,box-shadow 0.28s ease;
+}
+
+.photo-item img{
+  width:100%;
+  display:block;
+  height:auto;
+  border-radius:18px;
+}
+
+.photo-item:active{
+  transform:scale(0.97);
+}
+
+.lightbox{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(0,0,0,0.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease;
+}
+
+.lightbox.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.lightbox img{
+  max-width:92vw;
+  max-height:78vh;
+  border-radius:12px;
+}
+
+.lightbox-close{
+  position:absolute;
+  top:20px;
+  right:22px;
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.music-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:#ff6b81;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  box-shadow:0 4px 14px rgba(255,80,120,0.4);
+  z-index:100;
+}
+
+.music-btn.playing{
+  background:#ec407a;
+  animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.07)}
+  100%{transform:scale(1)}
+}
+
+.heart{
+  position:fixed;
+  pointer-events:none;
+  z-index:-1;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(360deg);opacity:0;}
+}
+
+.firework{
+  position:fixed;
+  pointer-events:none;
+  z-index:90;
+  border-radius:50%;
+  animation:explode 1.1s ease-out forwards;
+}
+
+@keyframes explode{
+  0%{transform:scale(0);opacity:1;}
+  100%{transform:scale(2.4);opacity:0;}
+}
+
+@media(min-width:768px){
+  .container{max-width:480px;}
+  .photo-gallery{column-count:2;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1 class="handwritten-title">给你的手信</h1>
+    <div class="text-box" id="msg"></div><span class="cursor"></span>
+
+    <div class="photo-gallery">
+      <div class="photo-item" onclick="openLightbox('photo1.jpg')">
+        <img src="photo1.jpg" alt="photo">
+      </div>
+      <div class="photo-item" onclick="openLightbox('photo2.jpg')">
+        <img src="photo2.jpg" alt="photo">
+      </div>
+      <div class="photo-item" onclick="openLightbox('photo3.jpg')">
+        <img src="photo3.jpg" alt="photo">
+      </div>
+      <div class="photo-item" onclick="openLightbox('photo4.jpg')">
+        <img src="photo4.jpg" alt="photo">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img src="" alt="大图" id="lightbox-img">
+</div>
+
+<div class="music-btn" id="musicBtn">♪</div>
+
+<script>
+// ========= 修改你的手信文字 =========
+const letterText = `
+亲爱的你：
+
+写下这封信的时候，
+脑海里都是和你有关的温柔瞬间。
+
+相隔遥远，但想念不会被距离冲淡。
+希望这封小小的手信，
+可以跨越山海送到你的面前。
+
+愿你平安喜乐，万事顺心，
+期待我们相见的那天。
+
+——手信
+`;
+
+// 打字机
+const dom = document.getElementById("msg");
+let i=0;
+function type(){
+  if(i < letterText.length){
+    dom.innerText += letterText[i++];
+    setTimeout(type,72);
+  }
+}
+type();
+
+// 爱心飘落
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className="heart";
+  heart.innerText="♥";
+  heart.style.left = Math.random()*100+"vw";
+  heart.style.fontSize = (12+Math.random()*22)+"px";
+  heart.style.color = ['#ff6b81','#ff8fab','#ff4757','#ffd700','#ff9a9e'][Math.floor(Math.random()*5)];
+  const dur = 4+Math.random()*6;
+  heart.style.animationDuration = dur+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), dur*1000);
+}
+setInterval(createHeart,330);
+
+// 点击烟花，兼容iOS触摸
+function createFirework(x,y){
+  const colors = ['#ff6b81','#ff8fab','#ff4757','#ffd700','#ffffff'];
+  for(let i=0;i<12;i++){
+    const fw = document.createElement("div");
+    fw.className="firework";
+    fw.style.left = x+"px";
+    fw.style.top = y+"px";
+    const s = 6+Math.random()*10;
+    fw.style.width = s+"px";
+    fw.style.height = s+"px";
+    fw.style.background = colors[Math.floor(Math.random()*colors.length)];
+    fw.style.transform = `translate(${(Math.random()-0.5)*80}px,${(Math.random()-0.5)*80}px)`;
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1100);
+  }
+  const bigH = document.createElement("div");
+  bigH.className="firework";
+  bigH.innerText="♥";
+  bigH.style.left=x+"px";
+  bigH.style.top=y+"px";
+  bigH.style.fontSize="24px";
+  bigH.style.color="#ff6b81";
+  bigH.style.transform="translate(-50%,-50%)";
+  document.body.appendChild(bigH);
+  setTimeout(()=>bigH.remove(),1100);
+}
+
+document.addEventListener("click",e=>{
+  const tag = e.target.tagName;
+  if(tag !== "IMG" && tag !== "SPAN"){
+    createFirework(e.clientX, e.clientY);
+  }
+});
+
+// 照片放大
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+function openLightbox(src){
+  lightboxImg.src = src;
+  lightbox.classList.add("active");
+}
+function closeLightbox(){
+  lightbox.classList.remove("active");
+  lightboxImg.src="";
+}
+lightbox.addEventListener("click",e=>{
+  if(e.target === lightbox) closeLightbox();
+});
+
+// iOS音频：必须手动点击触发，Safari禁止自动播放
+const musicBtn = document.getElementById("musicBtn");
+let audio = null;
+let playing = false;
+musicBtn.addEventListener("click",()=>{
+  if(!audio){
+    audio = new Audio("bg.mp3");
+    audio.loop = true;
+  }
+  if(playing){
+    audio.pause();
+    musicBtn.classList.remove("playing");
+    playing=false;
+  }else{
+    audio.play().catch(err=>console.log("audio play fail",err));
+    musicBtn.classList.add("playing");
+    playing=true;
+  }
+});
+</script>
+</body>
+</html>
