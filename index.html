@@ -8,7 +8,7 @@
 <title>给你的手信</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 <style>
 *{
   margin:0;
@@ -56,7 +56,8 @@ body{
 }
 
 .text-box{
-  font-size:16px;
+  font-family:"Ma Shan Zheng", cursive;
+  font-size:18px;
   line-height:2.4;
   color:#444;
   white-space:pre-wrap;
@@ -241,11 +242,11 @@ const letterText = `
 我本身是一个刻意克制的人，从来不想去改变任何人，可却被你潜移默化地影响。不知道和我相伴同行的日子里，你会不会也在日常点滴里，感受到被我影响、被我感染的瞬间。
 能够遇见你、认识你、陪伴你、拥有你，我满心欢喜，也倍感幸运。
 其实我是一个害怕孤独的人，谢谢你一直陪在我的身边。哪怕现在我们远隔大洋彼岸，我无时无刻不盼望着，我们可以真正守在彼此左右：一起下厨，一起运动，好好享受生活。七月已经过去了，我十分怀念我们相处相伴的那些时光。
-在我心里，最浪漫的从来不是什么宏大的桥段，而是实实在在的生活。我们都是平凡普通人，在相处之中互相治愈彼此。我也只想做一个普通人，和你在普通的日子里共度三餐四季，体味人间烟火；忙碌的时候彼此依靠，闲暇的时候，一起用脚步去丈量这个世界。
+在你的问卷里写过，我觉得最浪漫的不是什么宏大的桥段，而是实实在在的生活。我们在平凡的人间，在相处之中互相治愈彼此。我也只想做一个普通人，和你在普通的日子里共度三餐四季，体味人间烟火；忙碌的时候彼此依靠，闲暇的时候，一起用脚步去丈量这个世界。
 我们之间有着诸多不同，却一直能够互相理解、彼此包容。你总说我很理性，其实我只是不愿给出虚无缥缈的承诺。你有你的道理，我也有我的坚持。我可以接受生活里的种种不确定性，可同样也会畏惧未知。身处这个充满焦虑的时代，谁都会有缺少安全感的时候。
 但无论如何，我都会支持你的想法，尊重你的选择。我始终觉得，人这一生最重要的就是开心。
 我们相识已经一年多，时光流转，如同宇宙又老去一岁。我们也即将从校园踏入社会。当下的我们，难免迷茫、不知所措，会感到焦虑。但我相信，只要我们陪在彼此身边，互相鼓励、互相支撑，就能够在充满变数的未来里，守住属于我们那份确定的幸福与快乐。爱你。
-我一定会很喜欢你，也会好好珍惜你的礼物，我也相信你同样会喜欢我的心意。
+我一定会很喜欢你送的礼物，也会好好珍惜，我也相信你同样会喜欢我的心意。
 所以请你不要担心，不必惶恐，更不要给自己压力。你的心声和想法，我都会认真倾听，万事都有解决的办法。
 你是我最好的女孩。往后，想和你一同看日出日落，观云卷云舒，赏潮起潮落，候花开花谢。
 爱你的城子
@@ -257,7 +258,7 @@ let i = 0;
 function type(){
   if(i < letterText.length){
     dom.innerText += letterText[i++];
-    setTimeout(type, 145);
+    setTimeout(type, 180);
   }
 }
 type();
