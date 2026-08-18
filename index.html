@@ -199,21 +199,14 @@ body{
 
 <div class="container">
   <div class="card">
-    <h1 class="handwritten-title">给你的信</h1>
+    <h1 class="handwritten-title">给俊如的信</h1>
     <div class="text-box" id="msg"></div><span class="cursor"></span>
 
     <div class="photo-gallery">
       <div class="photo-item" onclick="openLightbox('photo1.jpg')">
         <img src="photo1.jpg" alt="photo">
       </div>
-      <div class="photo-item" onclick="openLightbox('photo2.jpg')">
-        <img src="photo2.jpg" alt="photo">
-      </div>
-      <div class="photo-item" onclick="openLightbox('photo3.jpg')">
-        <img src="photo3.jpg" alt="photo">
-      </div>
-      <div class="photo-item" onclick="openLightbox('photo4.jpg')">
-        <img src="photo4.jpg" alt="photo">
+    
       </div>
     </div>
   </div>
@@ -252,7 +245,7 @@ let i=0;
 function type(){
   if(i < letterText.length){
     dom.innerText += letterText[i++];
-    setTimeout(type,72);
+    setTimeout(type,100);
   }
 }
 type();
